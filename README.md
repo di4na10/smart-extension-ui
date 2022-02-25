@@ -17,6 +17,8 @@ cd smart_extension_ui
 
 Open the file se-api/app/config/db.config and substitute username, password and db with the one of your MySQL connection
 
+Check if the table 'packets' has the column 'id' has primary key
+
 # install dependency
 cd se-api
 npm install
