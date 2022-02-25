@@ -50,7 +50,7 @@
       </el-table-column>
       <el-table-column label="timestamp" prop="timestamp" min-width="180px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{d}-{m}-{y} {h}:{i}:{s}') }}</span>
+          <span>{{ parseTime(row.timestamp) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" min-width="150px" class-name="small-padding fixed-width">
@@ -99,9 +99,9 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
+import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import PacketData from './services/alarmData'
-import waves from '@/directive/waves' // waves directive
+import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -162,8 +162,6 @@ export default {
     retrieveAlarms() {
       PacketData.getAll()
         .then(response => {
-          console.log('retrieveAlarms')
-
           // Choose the order of the rows in the table
           if (this.listQuery.sort === '+id') {
             this.alarms = response.data.sort((a, b) => (a.level > b.level ? 1 : -1))
@@ -215,7 +213,6 @@ export default {
     },
 
     handleDeleteAll() {
-      console.log('handleDeleteAll')
       PacketData.deleteAll()
         .then(() => {
           this.$notify({
@@ -240,7 +237,6 @@ export default {
     },
 
     handleDelete(row, index) {
-      console.log('handleDelete')
       this.temp = Object.assign({}, row) // copy obj
       PacketData.delete(this.temp.index)
         .then(() => {
@@ -266,7 +262,6 @@ export default {
     },
 
     updateData() {
-      console.log('updateData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
@@ -297,7 +292,6 @@ export default {
     },
 
     handleUpdate(row) {
-      console.log('handleUpdate')
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
@@ -318,7 +312,6 @@ export default {
 
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log('createData')
           PacketData.create(data)
             .then(() => {
               this.dialogFormVisible = false
@@ -345,7 +338,6 @@ export default {
     },
 
     resetTemp() {
-      console.log('resetTemp')
       this.temp = {
         index: undefined,
         level: undefined,
@@ -356,7 +348,6 @@ export default {
     },
 
     handleCreate() {
-      console.log('handleCreate')
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -366,7 +357,6 @@ export default {
     },
 
     handleFilter() {
-      console.log('handleFilter')
       // this.listQuery.page = 1
       this.retrieveAlarms()
     },
@@ -414,6 +404,13 @@ export default {
       // value from 0 to 10
       var hue = ((10 - status) * 15).toString(10)
       return ['hsl(', hue, ',100%,50%)'].join('')
+    },
+
+    parseTime(milliseconds) {
+      var date = new Date(milliseconds)
+      var str = date.toLocaleString()
+
+      return str
     }
   }
 }

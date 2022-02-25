@@ -62,7 +62,7 @@
       </el-table-column>
       <el-table-column label="timestamp" prop="timestamp" min-width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp*1000 | parseTime('{d}-{m}-{y} {h}:{i}:{s}') }}</span>
+          <span>{{ parseTime(row.timestamp*1000) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="min" prop="min" width="80px" align="center">
@@ -157,9 +157,9 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
+import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import TagData from './services/tagData'
-import waves from '@/directive/waves' // waves directive
+import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -231,19 +231,17 @@ export default {
   },
   created() {
     setInterval(function() {
-      this.retrieveHostTag()
+      this.retrieveTags()
     }.bind(this), 1000)
   },
   methods: {
     retrieveTags() {
       TagData.getAll()
         .then(response => {
-          console.log('retrieveTags')
 
           // Choose the order of the rows in the table
           if (this.listQuery.sort === '+id') {
             this.tags = response.data.sort((a, b) => (a.tag_id > b.tag_id ? 1 : -1))
-            console.log(this.tags)
 
             // Search for substrings
             if (typeof this.listQuery.ref !== 'undefined') {
@@ -304,7 +302,6 @@ export default {
     },
 
     handleDeleteAll() {
-      console.log('handleDeleteAll')
       TagData.deleteAll()
         .then(() => {
           this.$notify({
@@ -354,7 +351,6 @@ export default {
     },
 
     updateData() {
-      console.log('updateData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
@@ -385,7 +381,6 @@ export default {
     },
 
     handleUpdate(row) {
-      console.log('handleUpdate')
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp * 1000)
       this.dialogStatus = 'update'
@@ -413,7 +408,6 @@ export default {
 
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log('createData')
           TagData.create(data)
             .then(() => {
               this.dialogFormVisible = false
@@ -440,7 +434,6 @@ export default {
     },
 
     resetTemp() {
-      console.log('resetTemp')
       this.temp = {
         tag_id: undefined,
         ref: undefined,
@@ -458,7 +451,6 @@ export default {
     },
 
     handleCreate() {
-      console.log('handleCreate')
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -468,7 +460,6 @@ export default {
     },
 
     handleFilter() {
-      console.log('handleFilter')
       // this.listQuery.page = 1
       this.retrieveTags()
     },
@@ -510,7 +501,15 @@ export default {
         }
       }
       return res
+    },
+
+    parseTime(milliseconds) {
+      var date = new Date(milliseconds)
+      var str = date.toLocaleString()
+
+      return str
     }
+
   }
 
 }

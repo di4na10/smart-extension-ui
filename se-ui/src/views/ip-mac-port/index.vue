@@ -56,7 +56,7 @@
       </el-table-column>
       <el-table-column label="timestamp" min-width="160px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp*1000 | parseTime('{d}-{m}-{y} {h}:{i}:{s}') }}</span>
+          <span>{{ parseTime(row.timestamp*1000) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" min-width="150px" class-name="small-padding fixed-width">
@@ -105,9 +105,9 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
+import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import TagData from './services/hostData'
-import waves from '@/directive/waves' // waves directive
+import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -215,7 +215,6 @@ export default {
             const finish_a = this.listQuery.page * this.listQuery.limit
             this.hosts = this.hosts.slice(init_a, finish_a)
           }
-          console.log('retrieveHost')
         })
         .catch(e => {
           console.log(e)
@@ -223,7 +222,6 @@ export default {
     },
 
     handleDeleteAll() {
-      console.log('handleDeleteAll')
       TagData.deleteAll()
         .then(() => {
           this.$notify({
@@ -248,9 +246,7 @@ export default {
     },
 
     handleDelete(row, index) {
-      console.log('handleDelete')
       this.temp = Object.assign({}, row) // copy obj
-      console.log(this.temp.host_id)
       TagData.delete(this.temp.host_id)
         .then(() => {
           this.$notify({
@@ -275,7 +271,6 @@ export default {
     },
 
     updateData() {
-      console.log('updateData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
@@ -306,7 +301,6 @@ export default {
     },
 
     handleUpdate(row) {
-      console.log('handleUpdate')
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp * 1000)
       this.dialogStatus = 'update'
@@ -327,7 +321,6 @@ export default {
 
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log('createData')
           TagData.create(data)
             .then(() => {
               this.dialogFormVisible = false
@@ -354,7 +347,6 @@ export default {
     },
 
     resetTemp() {
-      console.log('resetTemp')
       this.temp = {
         id: undefined,
         mac: '',
@@ -366,7 +358,6 @@ export default {
     },
 
     handleCreate() {
-      console.log('handleCreate')
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -376,7 +367,6 @@ export default {
     },
 
     handleFilter() {
-      console.log('handleFilter')
       // this.listQuery.page = 1
       this.retrieveHosts()
     },
@@ -410,9 +400,15 @@ export default {
         }
       }
       return res
+    },
+
+    parseTime(milliseconds) {
+      var date = new Date(milliseconds)
+      var str = date.toLocaleString()
+
+      return str
     }
   }
-
 }
 </script>
 

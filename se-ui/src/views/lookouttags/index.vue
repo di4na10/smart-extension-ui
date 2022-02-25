@@ -74,9 +74,9 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
+import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import HostTagData from './services/hosttagData'
-import waves from '@/directive/waves' // waves directive
+import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -127,7 +127,6 @@ export default {
     retrieveHostTag() {
       HostTagData.getAll()
         .then(response => {
-          console.log('retrieveHostTag')
 
           // Choose the order of the rows in the table
           if (this.listQuery.sort === '+id') {
@@ -174,7 +173,6 @@ export default {
     },
 
     handleDeleteAll() {
-      console.log('handleDeleteAll')
       HostTagData.deleteAll()
         .then(() => {
           this.$notify({
@@ -199,7 +197,6 @@ export default {
     },
 
     handleDelete(row, index) {
-      console.log('handleDelete')
       this.temp = Object.assign({}, row) // copy obj
       HostTagData.delete(this.temp.tag_id)
         .then(() => {
@@ -225,7 +222,6 @@ export default {
     },
 
     updateData() {
-      console.log('updateData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
@@ -256,7 +252,6 @@ export default {
     },
 
     handleUpdate(row) {
-      console.log('handleUpdate')
       this.temp = Object.assign({}, row) // copy obj
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -273,7 +268,6 @@ export default {
 
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log('createData')
           HostTagData.create(data)
             .then(() => {
               this.dialogFormVisible = false
@@ -300,7 +294,6 @@ export default {
     },
 
     resetTemp() {
-      console.log('resetTemp')
       this.temp = {
         tag_id: undefined,
         host_id: undefined
@@ -308,7 +301,6 @@ export default {
     },
 
     handleCreate() {
-      console.log('handleCreate')
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -318,7 +310,6 @@ export default {
     },
 
     handleFilter() {
-      console.log('handleFilter')
       // this.listQuery.page = 1
       this.retrieveHostTag()
     },

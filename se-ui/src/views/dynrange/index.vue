@@ -90,9 +90,9 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
+import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import DynRangeData from './services/dynrangeData'
-import waves from '@/directive/waves' // waves directive
+import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -149,7 +149,6 @@ export default {
     retrieveDynRange() {
       DynRangeData.getAll()
         .then(response => {
-          console.log('retrieveDynRange')
 
           // Choose the order of the rows in the table
           if (this.listQuery.sort === '+id') {
@@ -196,7 +195,6 @@ export default {
     },
 
     handleDeleteAll() {
-      console.log('handleDeleteAll')
       DynRangeData.deleteAll()
         .then(() => {
           this.$notify({
@@ -221,7 +219,6 @@ export default {
     },
 
     handleDelete(row, index) {
-      console.log('handleDelete')
       this.temp = Object.assign({}, row) // copy obj
       DynRangeData.delete(this.temp.tag_id)
         .then(() => {
@@ -247,7 +244,6 @@ export default {
     },
 
     updateData() {
-      console.log('updateData')
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
@@ -278,7 +274,6 @@ export default {
     },
 
     handleUpdate(row) {
-      console.log('handleUpdate')
       this.temp = Object.assign({}, row) // copy obj
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -297,7 +292,6 @@ export default {
 
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log('createData')
           DynRangeData.create(data)
             .then(() => {
               this.dialogFormVisible = false
@@ -324,7 +318,6 @@ export default {
     },
 
     resetTemp() {
-      console.log('resetTemp')
       this.temp = {
         tag_id: undefined,
         state: undefined,
@@ -334,7 +327,6 @@ export default {
     },
 
     handleCreate() {
-      console.log('handleCreate')
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -344,7 +336,6 @@ export default {
     },
 
     handleFilter() {
-      console.log('handleFilter')
       // this.listQuery.page = 1
       this.retrieveDynRange()
     },
