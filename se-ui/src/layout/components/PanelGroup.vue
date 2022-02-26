@@ -1,58 +1,60 @@
 <template>
-  <el-row :gutter="30" class="panel-group">
-    <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-hosts">
-          <svg-icon icon-class="087-display" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Hosts
+  <div class="panel-group">
+    <el-row :gutter="30" class="panel-group">
+      <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-hosts">
+            <svg-icon icon-class="087-display" class-name="card-panel-icon" />
           </div>
-          <count-to :start-val="0" :end-val="totalHosts" :duration="3000" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-ip-mac-ports">
-          <svg-icon icon-class="204-link" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            IP-MAC-Ports
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Hosts
+            </div>
+            <count-to :start-val="0" :end-val="totalHosts" :duration="3000" class="card-panel-num" />
           </div>
-          <count-to :start-val="0" :end-val="totalIpmacports" :duration="3000" class="card-panel-num" />
         </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-alarms">
-          <svg-icon icon-class="264-warning" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Alarms
+      </el-col>
+      <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-ip-mac-ports">
+            <svg-icon icon-class="204-link" class-name="card-panel-icon" />
           </div>
-          <count-to :start-val="0" :end-val="totalAlarms" :duration="3000" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-packets">
-          <svg-icon icon-class="035-file-text" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Packets Count
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              IP-MAC-Ports
+            </div>
+            <count-to :start-val="0" :end-val="totalIpmacports" :duration="3000" class="card-panel-num" />
           </div>
-          <count-to :start-val="0" :end-val="totalPackets" :duration="3000" class="card-panel-num" />
         </div>
-      </div>
-    </el-col>
-  </el-row>
+      </el-col>
+      <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-alarms">
+            <svg-icon icon-class="264-warning" class-name="card-panel-icon" />
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Alarms
+            </div>
+            <count-to :start-val="0" :end-val="totalAlarms" :duration="3000" class="card-panel-num" />
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="12" :sm="12" :md="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-packets">
+            <svg-icon icon-class="035-file-text" class-name="card-panel-icon" />
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">
+              Packets Count
+            </div>
+            <count-to :start-val="0" :end-val="totalPackets" :duration="3000" class="card-panel-num" />
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -163,7 +165,7 @@ export default {
       position: relative;
       overflow: hidden;
       color: #666;
-      background: #e9e9e9;
+      background: #F8F8F8;
       box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
       border-color: rgba(0, 0, 0, .05);
 

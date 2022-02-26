@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="dashboard-editor-container">
-      <panel-group />
-    </div>
     <div class="filter-container">
       <el-input v-model="listQuery.level" placeholder="level" style="width: 150px;" class="filter-item" @change="handleFilter" />
       <el-input v-model="listQuery.name" placeholder="name" style="width: 150px" class="filter-item" @change="handleFilter" />
@@ -99,7 +96,6 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import PacketData from './services/alarmData'
 import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -107,7 +103,6 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 export default {
   name: 'AlarmsList',
   components: {
-    PanelGroup,
     Pagination
   },
   directives: { waves },
@@ -419,12 +414,6 @@ export default {
 <style lang="scss" scoped>
   .app-container {
     background-color: #fff;
-  }
-
-  .dashboard-editor-container {
-    padding: 12px;
-    background-color: rgb(240, 242, 245);
-    position: relative;
   }
 
   .filter-container {

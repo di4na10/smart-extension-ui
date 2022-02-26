@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="dashboard-editor-container">
-      <panel-group />
-    </div>
     <div class="filter-container">
       <el-input v-model="listQuery.mac" placeholder="MAC" style="width: 150px;" class="filter-item" @change="handleFilter" />
       <el-input v-model="listQuery.ip" placeholder="IP" style="width: 150px" class="filter-item" @change="handleFilter" />
@@ -105,7 +102,6 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import TagData from './services/hostData'
 import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -113,7 +109,6 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 export default {
   name: 'HostsList',
   components: {
-    PanelGroup,
     Pagination
   },
   directives: { waves },
@@ -415,18 +410,6 @@ export default {
 <style lang="scss" scoped>
   .app-container {
     background-color: #fff;
-  }
-
-  .dashboard-editor-container {
-    padding: 12px;
-    background-color: rgb(240, 242, 245);
-    position: relative;
-
-    .chart-wrapper {
-      background: #fff;
-      padding: 16px 16px 0;
-      margin-bottom: 32px;
-    }
   }
 
   .filter-container {

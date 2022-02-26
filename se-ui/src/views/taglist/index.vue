@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="dashboard-editor-container">
-      <panel-group />
-    </div>
     <div class="filter-container">
       <el-input v-model="listQuery.ref" placeholder="ref" style="width: 150px;" class="filter-item" @change="handleFilter" />
       <el-input v-model="listQuery.name" placeholder="name" style="width: 150px" class="filter-item" @change="handleFilter" />
@@ -157,7 +154,6 @@
 </template>
 
 <script>
-import PanelGroup from '@/views/dashboard/components/PanelGroup'
 import TagData from './services/tagData'
 import waves from '@/components/Waves' // Waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -165,7 +161,6 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 export default {
   name: 'TagsList',
   components: {
-    PanelGroup,
     Pagination
   },
   directives: { waves },
@@ -238,7 +233,6 @@ export default {
     retrieveTags() {
       TagData.getAll()
         .then(response => {
-
           // Choose the order of the rows in the table
           if (this.listQuery.sort === '+id') {
             this.tags = response.data.sort((a, b) => (a.tag_id > b.tag_id ? 1 : -1))
@@ -518,12 +512,6 @@ export default {
 <style lang="scss" scoped>
   .app-container {
     background-color: #fff;
-  }
-
-  .dashboard-editor-container {
-    padding: 12px;
-    background-color: rgb(240, 242, 245);
-    position: relative;
   }
 
   .filter-container {

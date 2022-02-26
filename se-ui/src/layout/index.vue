@@ -6,13 +6,16 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
+      <div class="dashboard-editor-container">
+        <panel-group />
+      </div>
       <app-main />
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain, PanelGroup } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -20,6 +23,7 @@ export default {
   components: {
     Navbar,
     Sidebar,
+    PanelGroup,
     AppMain
   },
   mixins: [ResizeMixin],
@@ -90,4 +94,17 @@ export default {
   .mobile .fixed-header {
     width: 100%;
   }
+
+  .dashboard-editor-container {
+    padding: 32px;
+    background-color: #F8F8F8;
+    position: relative;
+
+    .chart-wrapper {
+      background: #fff;
+      padding: 16px 16px 0;
+      margin-bottom: 32px;
+    }
+  }
+
 </style>
