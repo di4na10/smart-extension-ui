@@ -5,20 +5,20 @@ class HostData {
     return http.get('/host')
   }
 
-  get(mac, ip, port) {
-    return http.get(`/host/${mac}/${ip}/${port}`)
+  get(mac, ip, plc_port, other_port, direction) {
+    return http.get(`/host/${mac}/${ip}/${plc_port}/{$other_port}/${direction}`)
   }
 
   create(data) {
     return http.post('/host', data)
   }
 
-  update(mac, ip, port, data) {
-    return http.put(`/host/${mac}/${ip}/${port}`, data)
+  update(mac, ip, plc_port, other_port, direction, data) {
+    return http.put(`/host/${mac}/${ip}/${plc_port}/{$other_port}/${direction}`, data)
   }
 
-  delete(mac, ip, port) {
-    return http.delete(`/host/${mac}/${ip}/${port}`)
+  delete(mac, ip, plc_port, other_port, direction) {
+    return http.delete(`/host/${mac}/${ip}/${plc_port}/{$other_port}/${direction}`)
   }
 
   deleteAll() {

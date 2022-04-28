@@ -3,7 +3,11 @@
     <div class="filter-container">
       <el-input v-model="listQuery.mac" placeholder="MAC" style="width: 150px;" class="filter-item" @change="handleFilter" />
       <el-input v-model="listQuery.ip" placeholder="IP" style="width: 150px" class="filter-item" @change="handleFilter" />
-      <el-input v-model="listQuery.port" placeholder="port" class="filter-item" style="width: 100px" @change="handleFilter" />
+      <el-input v-model="listQuery.plc_port" placeholder="PLC port" class="filter-item" style="width: 100px" @change="handleFilter" />
+      <el-input v-model="listQuery.other_port" placeholder="other port" class="filter-item" style="width: 100px" @change="handleFilter" />
+      <el-input v-model="listQuery.direction" placeholder="direction" class="filter-item" style="width: 100px" @change="handleFilter" />
+      <el-input v-model="listQuery.plc_name" placeholder="plc_name" class="filter-item" style="width: 100px" @change="handleFilter" />
+      <el-input v-model="listQuery.broadcast" placeholder="broadcast" class="filter-item" style="width: 100px" @change="handleFilter" />
       <el-input v-model="listQuery.protocol" placeholder="protocol" style="width: 100px" class="filter-item" @change="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
@@ -36,14 +40,29 @@
           <span>{{ row.IP }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="port" width="60px" align="center">
+      <el-table-column label="PLC port" width="60px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.port }}</span>
+          <span>{{ row.plc_port }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="other port" width="60px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.other_port }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="PLC name" width="60px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.plc_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="protocol" width="80px" align="center">
         <template slot-scope="{row}">
           <el-tag>{{ row.protocol }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="broadcast" width="60px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.broadcast }}</span>
         </template>
       </el-table-column>
       <el-table-column label="timestamp" prop="timestamp" sortable="custom" min-width="160px" align="center">
@@ -73,11 +92,23 @@
         <el-form-item label="IP" prop="IP">
           <el-input v-model="temp.IP" />
         </el-form-item>
-        <el-form-item label="Port" prop="port">
-          <el-input v-model="temp.port" />
+        <el-form-item label="PLC port" prop="plc_port">
+          <el-input v-model="temp.plc_port" />
+        </el-form-item>
+        <el-form-item label="Other port" prop="other_port">
+          <el-input v-model="temp.other_port" />
+        </el-form-item>
+        <el-form-item label="Direction" prop="direction">
+          <el-input v-model="temp.direction" />
+        </el-form-item>
+        <el-form-item label="PLC name" prop="plc_name">
+          <el-input v-model="temp.plc_name" />
         </el-form-item>
         <el-form-item label="Protocol" prop="protocol">
           <el-input v-model="temp.protocol" />
+        </el-form-item>
+        <el-form-item label="Broadcast" prop="broadcast">
+          <el-input v-model="temp.broadcast" />
         </el-form-item>
         <el-form-item label="Timestamp" prop="timestamp">
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" style="width: 100%;" />
@@ -118,8 +149,12 @@ export default {
         limit: 10,
         mac: undefined,
         ip: undefined,
-        port: undefined,
+        plc_port: undefined,
+        other_port: undefined,
+        direction: undefined,
+        plc_name: undefined,
         protocol: undefined,
+        broadcast: undefined,
         timestamp: undefined,
         sort: '+id'
       },
@@ -127,8 +162,12 @@ export default {
       temp: {
         mac: '',
         ip: '',
-        port: '',
+        plc_port: '',
+        other_port: '',
+        direction: '',
+        plc_name: '',
         protocol: '',
+        broadcast: '',
         timestamp: ''
       },
       dialogFormVisible: false,
@@ -140,8 +179,12 @@ export default {
       rules: {
         MAC: [{ required: true, message: 'MAC address is required' }],
         IP: [{ required: true, message: 'IP address is required' }],
-        port: [{ required: true, message: 'port is required' }],
+        plc_port: [{ required: true, message: 'PLC port is required' }],
+        other_port: [{ required: true, message: 'other port is required' }],
+        direction: [{ required: true, message: 'direction is required' }],
+        plc_name: [{ required: true, message: 'plc_name is required' }],
         protocol: [{ required: true, message: 'protocol is required' }],
+        broadcast: [{ required: true, message: 'broadcast is required' }],
         timestamp: [{ type: 'date', required: true, message: 'timestamp is required' }]
       }
     }
@@ -165,11 +208,23 @@ export default {
             if (typeof this.listQuery.ip !== 'undefined') {
               this.hosts = this.filter(this.hosts, this.listQuery.ip, 'IP')
             }
-            if (typeof this.listQuery.port !== 'undefined') {
-              this.hosts = this.filter(this.hosts, this.listQuery.port, 'port')
+            if (typeof this.listQuery.plc_port !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.plc_port, 'plc_port')
+            }
+            if (typeof this.listQuery.other_port !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.other_port, 'other_port')
+            }
+            if (typeof this.listQuery.direction !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.direction, 'direction')
             }
             if (typeof this.listQuery.protocol !== 'undefined') {
               this.hosts = this.filter(this.hosts, this.listQuery.protocol, 'protocol')
+            }
+            if (typeof this.listQuery.plc_name !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.plc_name, 'plc_name')
+            }
+            if (typeof this.listQuery.broadcast !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.broadcast, 'broadcast')
             }
 
             // The total number of element in the array
@@ -189,11 +244,23 @@ export default {
             if (typeof this.listQuery.ip !== 'undefined') {
               this.hosts = this.filter(this.hosts, this.listQuery.ip, 'IP')
             }
-            if (typeof this.listQuery.port !== 'undefined') {
-              this.hosts = this.filter(this.hosts, this.listQuery.port, 'port')
+            if (typeof this.listQuery.plc_port !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.plc_port, 'plc_port')
+            }
+            if (typeof this.listQuery.other_port !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.other_port, 'other_port')
+            }
+            if (typeof this.listQuery.direction !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.direction, 'direction')
             }
             if (typeof this.listQuery.protocol !== 'undefined') {
               this.hosts = this.filter(this.hosts, this.listQuery.protocol, 'protocol')
+            }
+            if (typeof this.listQuery.plc_name !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.plc_name, 'plc_name')
+            }
+            if (typeof this.listQuery.broadcast !== 'undefined') {
+              this.hosts = this.filter(this.hosts, this.listQuery.broadcast, 'broadcast')
             }
 
             // The total number of element in the array
@@ -236,7 +303,7 @@ export default {
 
     handleDelete(row) {
       this.temp = Object.assign({}, row) // copy obj
-      HostData.delete(row.MAC, row.IP, row.port)
+      HostData.delete(row.MAC, row.IP, row.plc_port, row.other_port, row.direction)
         .then(() => {
           this.$notify({
             title: 'Success',
@@ -264,7 +331,7 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = tempData.timestamp.toLocaleString() // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          HostData.update(tempData.MAC, tempData.IP, tempData.port, tempData)
+          HostData.update(tempData.MAC, tempData.IP, tempData.plc_port, tempData.other_port, tempData.direction, tempData)
             .then(() => {
               this.dialogFormVisible = false
               this.$notify({
@@ -303,8 +370,12 @@ export default {
       const data = {
         MAC: this.temp.MAC,
         IP: this.temp.IP,
-        port: this.temp.port,
+        plc_port: this.temp.plc_port,
+        other_port: this.temp.other_port,
+        direction: this.temp.direction,
+        plc_name: this.temp.plc_name,
         protocol: this.temp.protocol,
+        broadcast: this.temp.broadcast,
         timestamp: this.temp.timestamp.toLocaleString()
       }
 
@@ -337,12 +408,15 @@ export default {
 
     resetTemp() {
       this.temp = {
-        id: undefined,
         mac: '',
         ip: '',
-        port: 0,
+        plc_port: '',
+        other_port: '',
+        direction: '',
+        plc_name: '',
         protocol: '',
-        timestamp: new Date()
+        broadcast: '',
+        timestamp: ''
       }
     },
 

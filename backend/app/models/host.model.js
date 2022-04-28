@@ -8,11 +8,25 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       primaryKey: true
     },
-    port: {
+    plc_port: {
+      type: Sequelize.STRING,
+      primaryKey: true
+    },
+    other_port: {
+      type: Sequelize.STRING,
+      primaryKey: true
+    },
+    direction: {
       type: Sequelize.STRING,
       primaryKey: true
     },
     protocol: {
+      type: Sequelize.STRING
+    },
+    plc_name: {
+      type: Sequelize.STRING
+    },
+    broadcast: {
       type: Sequelize.STRING
     },
     timestamp: {

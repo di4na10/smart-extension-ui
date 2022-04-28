@@ -9,14 +9,14 @@ module.exports = app => {
   // Retrieve all Host
   router.get('/', host.findAll)
 
-  // Retrieve a single Host with (mac, ip, port)
-  router.get('/:mac/:ip/:port', host.findOne)
+  // Retrieve a single Host with (mac, ip, port, other_port, direction)
+  router.get('/:mac/:ip/:plc_port/:other_port/:direction', host.findOne)
 
-  // Update a Host with (mac, ip, port)
-  router.put('/:mac/:ip/:port', host.update)
+  // Update a Host with (mac, ip, port, other_port, direction)
+  router.put('/:mac/:ip/:plc_port/:other_port/:direction', host.update)
 
-  // Delete a Host with (mac, ip, port)
-  router.delete('/:mac/:ip/:port', host.delete)
+  // Delete a Host with (mac, ip, port, other_port,direction)
+  router.delete('/:mac/:ip/:plc_port/:other_port/:direction', host.delete)
 
   // Delete a new Host
   router.delete('/', host.deleteAll)
